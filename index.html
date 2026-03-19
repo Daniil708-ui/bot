@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pixel AI Scriptwriter</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- Шрифт Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Главный экран -->
+    <div id="main-screen" class="screen active">
+        <!-- Шапка -->
+        <header class="tg-header">
+            <div class="header-title">
+                <span class="logo-icon">🤖</span>
+                <div>
+                    <h1>Pixel Agent</h1>
+                    <p class="status-text">Онлайн • Qwen 2.5</p>
+                </div>
+            </div>
+            <button id="history-btn" class="icon-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+            </button>
+        </header>
+
+        <!-- Область визуализации (Робот) -->
+        <div class="visualizer-container">
+            <canvas id="robotCanvas" width="300" height="200"></canvas>
+            <div class="viz-overlay">
+                <span id="robot-status" class="status-badge">Готов к работе</span>
+            </div>
+        </div>
+
+        <!-- Чат -->
+        <div id="chat-container" class="chat-area">
+            <div id="messages-list"></div>
+        </div>
+
+        <!-- Ввод сообщения -->
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="Опиши сценарий видео..." autocomplete="off">
+            <button id="send-btn" class="send-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Экран Истории (Модальное окно) -->
+    <div id="history-screen" class="screen modal">
+        <header class="tg-header">
+            <button id="close-history" class="back-btn">←</button>
+            <h1>История чатов</h1>
+            <div style="width: 24px;"></div> <!-- Spacer -->
+        </header>
+        <div id="history-list" class="list-container"></div>
+    </div>
+
+    <!-- Экран Профиля (Модальное окно) -->
+    <div id="profile-screen" class="screen modal">
+        <header class="tg-header">
+            <button id="close-profile" class="back-btn">←</button>
+            <h1>Профиль</h1>
+            <div style="width: 24px;"></div>
+        </header>
+        <div class="profile-content">
+            <div class="user-card">
+                <div class="avatar-placeholder">👤</div>
+                <h2 id="user-name">Пользователь</h2>
+                <p id="user-id">@username</p>
+            </div>
+
+            <div class="section-title">Тарифный план</div>
+            <div class="tariff-card current">
+                <div class="tariff-header">
+                    <span class="tariff-name">Free Starter</span>
+                    <span class="tariff-price">0 ₽</span>
+                </div>
+                <ul class="tariff-features">
+                    <li>✅ Доступ к Qwen 2.5</li>
+                    <li>✅ Базовые сценарии</li>
+                    <li>❌ Приоритетная генерация</li>
+                    <li>❌ Экспорт в PDF</li>
+                </ul>
+                <button class="upgrade-btn">Перейти на Pro</button>
+            </div>
+
+            <div class="section-title">Настройки</div>
+            <div class="settings-item">
+                <span>Тема оформления</span>
+                <select id="theme-select">
+                    <option value="system">Как в Telegram</option>
+                    <option value="dark">Тёмная (Pixel)</option>
+                    <option value="light">Светлая</option>
+                </select>
+            </div>
+            <div class="settings-item danger" onclick="clearAllData()">
+                <span>Очистить все данные</span>
+                <span>🗑️</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="robot.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
